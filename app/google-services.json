@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "81410768853",
+    "firebase_url": "https://smartpassfime.firebaseio.com",
+    "project_id": "smartpassfime",
+    "storage_bucket": "smartpassfime.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:81410768853:android:cf81dd414cc752d0",
+        "android_client_info": {
+          "package_name": "com.smartpassfime.smartpassfime"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "81410768853-2v05gcd8ec9o485aina6g9g8l1q7uqif.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.smartpassfime.smartpassfime",
+            "certificate_hash": "de99633d3138d6afeb95cb7b52e6696bbb9cb663"
+          }
+        },
+        {
+          "client_id": "81410768853-54o1467ck9j7p5kbpdo4ln4kic6j4t1q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBE6u9RijZgdyy87_O1iI0BhiNt3TwoCY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "81410768853-54o1467ck9j7p5kbpdo4ln4kic6j4t1q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
