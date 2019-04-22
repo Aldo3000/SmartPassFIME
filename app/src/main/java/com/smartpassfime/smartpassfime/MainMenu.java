@@ -181,7 +181,7 @@ public class MainMenu extends AppCompatActivity {
     }
 
     public void Saludos(){
-        Database.child(VariablesEstaticas.CurrentUserUID).child("Matricula").addValueEventListener(new ValueEventListener() {
+        Database.child(VariablesEstaticas.CurrentUserUID).child("Matriculaa").addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -191,7 +191,7 @@ public class MainMenu extends AppCompatActivity {
                 if(VariablesEstaticas.CurrentUserUID != null && !VariablesEstaticas.CurrentUserUID.equals("")) {
                     Log.e("TEST", "VALOR: "+VariablesEstaticas.CurrentUserUID);
                     String bienvenida = dataSnapshot.getValue().toString();
-                    usuarioBienvenidoText.setText("Saludos\n" + bienvenida);
+                    usuarioBienvenidoText.setText("Bienvenido\n" + bienvenida);
                 }
             }
 
@@ -201,6 +201,28 @@ public class MainMenu extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onResume() {
+        //vuelve visible o invisible el boton
+        DetectaConexion CD = new DetectaConexion(this);
+        CD.ConexionPorSegundos(nowifibutton);
+        super.onResume();
+    }
+
+    //Detiene la busqueda de conexion a internet si se detiene la ventana
+    @Override
+    protected void onPause() {
+        DetectaConexion CD = new DetectaConexion(this);
+        CD.DetenerContador();
+        super.onPause();
+    }
+
+    @Override
+    protected void  onStop(){
+        super.onStop();
+    }
+}
 
 
 
@@ -221,5 +243,5 @@ public class MainMenu extends AppCompatActivity {
             }
         });
     }*/
-}
+
 

@@ -37,6 +37,7 @@ public class ActivityIngresar1 extends AppCompatActivity {
     private ImageButton nowifibutton;
     private Button Ingresar, Registro, Registrarse;
     private FirebaseAuth Auth;
+    private ImageButton OlvideContraseña;
     private FirebaseAuth.AuthStateListener AuthListener;
     public static String uiid;
     public static boolean isLoged = false;
@@ -79,7 +80,7 @@ public class ActivityIngresar1 extends AppCompatActivity {
             Contraseña = findViewById(R.id.contraseña);
             Ingresar = findViewById(R.id.entrar);
             Registro = findViewById(R.id.registro);
-
+            OlvideContraseña = findViewById(R.id.olvidebutton);
             MetodosUtiles EliminaEmoijis = new MetodosUtiles();
             Matricula.setFilters(new InputFilter[]{EliminaEmoijis.filters()});
 
@@ -116,7 +117,7 @@ public class ActivityIngresar1 extends AppCompatActivity {
                     if (VariablesEstaticas.Locked == false) { //Si no esta locked
                         VariablesEstaticas.Locked = true;
                         if (CD.isConnected()) { //Si esta conectado a internet
-                            Intent olvidepassword = new Intent(ActivityIngresar1.this, OlvidePassword.class); //Abre el activity
+                            Intent olvidepassword = new Intent(ActivityIngresar1.this, ActivityOlvide.class); //Abre el activity
                             startActivity(olvidepassword);
                             VariablesEstaticas.Locked = false; //Para poder volver a entrar al boton
                         } else {    //Si no esta conectado a internet
@@ -167,7 +168,7 @@ public class ActivityIngresar1 extends AppCompatActivity {
         password = Contraseña.getText().toString().trim();
         Validar(email, password);
         if (detectorDeErroresEmail == 0 && detectorDeErroresPassword == 0) {
-            Progress.setMessage("Entrnado, por favor espere");
+            Progress.setMessage("Entrando, por favor espere");
             Progress.show();
             RevisarBD();
         }

@@ -10,16 +10,16 @@
     <!-- Revisar la conexion a internet -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <uses-permission android:name="android.permission.NFC" />
-    <uses-feature android:name="android.hardware.nfc" android:required="true" />
+
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="true" />
 
     <uses-permission android:name="android.permission.CAMERA" />
-
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
-
         android:name=".FirebaseOffline"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -36,28 +36,32 @@
         </activity>
         <activity android:name=".MainMenu" />
         <activity android:name=".ActivityRegistrar" />
-        <activity android:name=".ActivityNFC" >
+        <activity android:name=".ActivityNFC">
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:mimeType="text/plain" />
             </intent-filter>
 
             <meta-data
                 android:name="android.nfc.action.TECH_DISCOVERED"
                 android:resource="@xml/nfc_tech_filter" />
-
-
-
         </activity>
         <activity android:name=".ActivityQR" />
         <activity android:name=".ActivityEstadisticas" />
         <activity android:name=".ActivityCambio" />
         <activity android:name=".ActivityAjustes" />
         <activity android:name=".ActivityContacto" />
-        <activity android:name=".ActivityFinish"></activity>
-        <meta-data android:name="com.google.android.gms.vision.DEPENDENCIES"
-            android:value="barcode"></meta-data>
+        <activity android:name=".ActivityFinish" />
+
+        <meta-data
+            android:name="com.google.android.gms.vision.DEPENDENCIES"
+            android:value="barcode" />
+
+        <activity android:name=".ActivityOlvide" />
+        <activity android:name=".CambiarPassword"></activity>
     </application>
 
 </manifest>

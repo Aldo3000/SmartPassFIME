@@ -37,7 +37,7 @@ public class ActivityRegistrar extends AppCompatActivity {
     private DatabaseReference Database;
     private int detectorDeErroresMatricula = 0, detectorDeErroresPassword = 0, detectorDeErroresEmail = 0;
     public String emailSrt, matriulaStr, contraseñaStr;
-    private int cero = 0;
+    private String cero = "0";
 
     private boolean ExisteMatricula = false;
     private boolean ExisteCorreo = false;
@@ -158,17 +158,18 @@ public class ActivityRegistrar extends AppCompatActivity {
             }
         });-----v2*/
 
-            GettersDeUsuarios g = new GettersDeUsuarios(matriulaStr, emailSrt, contraseñaStr, "true"); //Usuario se logea al crear la cuenta HAY QUE CREAR UN FALSE AL CERRAR SESION
+            GettersDeUsuarios g = new GettersDeUsuarios(matriulaStr, emailSrt, contraseñaStr, "true", cero, cero, cero); //Usuario se logea al crear la cuenta HAY QUE CREAR UN FALSE AL CERRAR SESION
             Database.child(uid).setValue(g);
-            creaciondedatos();
+           // creaciondedatos();
             LogeoExitoso(uid);
 
 
     }
 
     public void LogeoExitoso(String UID){
+
         Progress.dismiss();
-        Toast.makeText(ActivityRegistrar.this, "Usuario generado en BD", Toast.LENGTH_SHORT).show();
+        Toast.makeText(ActivityRegistrar.this, "Alumno generado en BD", Toast.LENGTH_SHORT).show();
         Intent mainmenu = new Intent(ActivityRegistrar.this, MainMenu.class);
         mainmenu.putExtra("El UID",UID);
         startActivity(mainmenu);
@@ -180,7 +181,7 @@ public class ActivityRegistrar extends AppCompatActivity {
         finish(); //Terminamos
     }
 
-    private void creaciondedatos(){
+    /*private void creaciondedatos(){
         FirebaseDatabase.getInstance().getReference("Matricula").child(ActivityIngresar1.uiid).child("Cubiculo").setValue(cero).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -214,7 +215,7 @@ public class ActivityRegistrar extends AppCompatActivity {
                 }
             }
         });
-    }
+    }*/
 
     @Override
     protected void onStart() {

@@ -1,7 +1,9 @@
 package com.smartpassfime.smartpassfime;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.Manifest;
 import android.net.Uri;
@@ -18,6 +20,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.webkit.URLUtil;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +33,7 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -54,6 +58,13 @@ public class ActivityQR extends AppCompatActivity {
 
     public int Cantidad = 0;
 
+    private ImageButton nowifibutton;
+    private ProgressDialog Progress;
+    private DatabaseReference Database;
+
+    SharedPreferences sharedPreferences;
+    VariablesEstaticas VE = new VariablesEstaticas();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +73,24 @@ public class ActivityQR extends AppCompatActivity {
         Back = findViewById(R.id.back);
         Prueba = findViewById(R.id.prueba);
         cameraView = findViewById(R.id.camaraview);
+        Database = FirebaseDatabase.getInstance().getReference("Matricula");
+        Database.keepSynced(true);
+
+        sharedPreferences = getSharedPreferences(VariablesEstaticas.SHARED_PREFS, Context.MODE_PRIVATE);
+        VE.CargarDatos(sharedPreferences);
+
+        nowifibutton = findViewById(R.id.activity_qr_nowifibutton);
+
+        final DetectaConexion CD = new DetectaConexion(this);
+        CD.startConexion(nowifibutton);
+
+        nowifibutton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                CD.mensajeNoInternet(ActivityQR.this);
+            }
+        });
+
 
         Back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,7 +110,7 @@ public class ActivityQR extends AppCompatActivity {
 
     //Cargar los datos de tus entradas de la sala para luego sobre escribirlas de tu contador
     public void obtenervaloresQR(){
-        FirebaseDatabase.getInstance().getReference("Matricula").child(ActivityIngresar1.uiid).child("Cubiculo").addValueEventListener(new ValueEventListener() {
+        Database.child(VariablesEstaticas.CurrentUserUID).child("Cubiculo").addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -94,7 +123,7 @@ public class ActivityQR extends AppCompatActivity {
 
             }
         });
-        FirebaseDatabase.getInstance().getReference("Matricula").child(ActivityIngresar1.uiid).child("General").addValueEventListener(new ValueEventListener() {
+        Database.child(VariablesEstaticas.CurrentUserUID).child("SalaGeneral").addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -107,7 +136,7 @@ public class ActivityQR extends AppCompatActivity {
 
             }
         });
-        FirebaseDatabase.getInstance().getReference("Matricula").child(ActivityIngresar1.uiid).child("Mesa de Trabajo").addValueEventListener(new ValueEventListener() {
+        Database.child(VariablesEstaticas.CurrentUserUID).child("MesaDeTrabajo").addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -127,7 +156,7 @@ public class ActivityQR extends AppCompatActivity {
 
         if(saca.equals(QR_GENERAL)){
             LECTURA_GENERAL = AumentadordeConteo(LECTURA_GENERAL);
-            String aGeneral = "General";
+            String aGeneral = "SalaGeneral";
             SubirDBFinal(aGeneral, LECTURA_GENERAL);
           //  Toast.makeText(ActivityQR.this, "SijalaGeneral", Toast.LENGTH_LONG).show();
         } else if(saca.equals(QR_CUBICULO)){
@@ -137,7 +166,7 @@ public class ActivityQR extends AppCompatActivity {
           //  Toast.makeText(ActivityQR.this, "SijalaCubiculo", Toast.LENGTH_LONG).show();
         }else if (saca.equals(QR_MTRABAJO)){
             LECTURA_MTRABAJO = AumentadordeConteo(LECTURA_MTRABAJO);
-            String aMTrabajo = "Mesa de Trabajo";
+            String aMTrabajo = "MesaDeTrabajo";
             SubirDBFinal(aMTrabajo, LECTURA_MTRABAJO);
             //Toast.makeText(ActivityQR.this, "SijalaMtrabajo", Toast.LENGTH_LONG).show();
         } else {
@@ -163,18 +192,10 @@ public class ActivityQR extends AppCompatActivity {
 
     private void SubirDBFinal(String Resultado1, String Resultado2){
 
-        FirebaseDatabase.getInstance().getReference("Matricula").child(ActivityIngresar1.uiid).child(Resultado1).setValue(Resultado2).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(ActivityQR.this, "Entrada Registrada ", Toast.LENGTH_SHORT).show();
-                    Intent finish = new Intent(ActivityQR.this, ActivityFinish.class);
-                    startActivity(finish);
-                } else {
-                    Toast.makeText(ActivityQR.this, "Algo falló al guardar tu entrada", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        Database.child(VariablesEstaticas.CurrentUserUID).child(Resultado1).setValue(Resultado2);
+//        Toast.makeText(ActivityQR.this, "Entrada Registrada ", Toast.LENGTH_SHORT).show();
+        Intent finish = new Intent(ActivityQR.this, ActivityFinish.class);
+        startActivity(finish);
 
     }
 
@@ -336,6 +357,21 @@ public class ActivityQR extends AppCompatActivity {
                 }
             }
         });
+
+    }
+
+    @Override
+    protected void onPause() {
+        DetectaConexion CD = new DetectaConexion(this);
+        CD.DetenerContador();
+        super.onPause();
+    }
+
+    @Override
+    public void onResume(){
+        DetectaConexion CD = new DetectaConexion(this);
+        CD.ConexionPorSegundos(nowifibutton);
+        super.onResume();
 
     }
 }

@@ -7,6 +7,10 @@ public class GettersDeUsuarios {
     public String Email;
     public String Contraseña;
     public String CuentaAbierta;
+    public String Cubiculo;
+    public String SalaGeneral;
+    public String MesaDeTrabajo;
+
 
     //public String Contraseña;
 
@@ -14,11 +18,14 @@ public class GettersDeUsuarios {
 
     }
 
-    public GettersDeUsuarios(String Matriculaa, String Email, String Contraseña, String CuentaAbierta){
+    public GettersDeUsuarios(String Matriculaa, String Email, String Contraseña, String CuentaAbierta, String Cubiculo, String SalaGeneral, String MesaDeTrabajo){
         this.Matriculaa = Matriculaa;
         this.Email = Email;
         this.Contraseña = Contraseña;
         this.CuentaAbierta = CuentaAbierta;
+        this.Cubiculo = Cubiculo;
+        this.SalaGeneral = SalaGeneral;
+        this.MesaDeTrabajo = MesaDeTrabajo;
 
     }
 
