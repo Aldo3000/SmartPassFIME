@@ -61,7 +61,8 @@
             android:value="barcode" />
 
         <activity android:name=".ActivityOlvide" />
-        <activity android:name=".CambiarPassword"></activity>
+        <activity android:name=".CambiarPassword" />
+        <activity android:name=".CambiarCorreoElectronico"></activity>
     </application>
 
 </manifest>

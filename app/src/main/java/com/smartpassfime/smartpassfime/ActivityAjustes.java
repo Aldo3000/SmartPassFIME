@@ -59,7 +59,7 @@ public class ActivityAjustes extends AppCompatActivity {
         reiniciodeestadisticas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ActivityAjustes.this, MainMenu.class);
+                Intent intent = new Intent(ActivityAjustes.this, CambiarCorreoElectronico.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
