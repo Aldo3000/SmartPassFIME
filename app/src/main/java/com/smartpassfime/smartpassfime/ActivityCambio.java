@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -32,12 +33,14 @@ public class ActivityCambio extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cambio);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         YesCambio = findViewById(R.id.yesalcambiopormexico);
         NoCambio = findViewById(R.id.noalcambiopormexico);
 
         nowifibutton = findViewById(R.id.activity_estadisticas_nowifibutton);
         final DetectaConexion CD = new DetectaConexion(this);
         CD.startConexion(nowifibutton);
+
 
         nowifibutton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -51,7 +54,14 @@ public class ActivityCambio extends AppCompatActivity {
         sharedPreferences= getSharedPreferences(VariablesEstaticas.SHARED_PREFS, Context.MODE_PRIVATE);
         VE.CargarDatos(sharedPreferences);
         BackButton = findViewById(R.id.back);
-
+        NoCambio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ActivityCambio.this, MainMenu.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+            }
+        });
         BackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,5 +1,6 @@
 package com.smartpassfime.smartpassfime;
 
+import android.content.pm.ActivityInfo;
 import android.graphics.drawable.AnimationDrawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,8 @@ public class ActivityContacto extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacto);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
 
         constraintLayout = findViewById(R.id.actcontac);
         animationDrawable = (AnimationDrawable) constraintLayout.getBackground();

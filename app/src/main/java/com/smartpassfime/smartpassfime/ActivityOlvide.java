@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
@@ -94,6 +95,7 @@ import static android.os.StrictMode.setThreadPolicy;
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_olvide);
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             //Persistencia de datos y referencia
             Database = FirebaseDatabase.getInstance().getReference("Matricula");
             Database.keepSynced(true);

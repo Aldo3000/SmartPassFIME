@@ -3,6 +3,7 @@ package com.smartpassfime.smartpassfime;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,8 +25,10 @@ public class ActivityAjustes extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajustes);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Database = FirebaseDatabase.getInstance().getReference("Matricula");
         Database.keepSynced(true);
         //Persistencia de variables

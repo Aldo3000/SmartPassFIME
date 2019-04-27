@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.nfc.FormatException;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
@@ -75,7 +76,7 @@ public class ActivityNFC extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfc);
         context = this;
-
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 
         //Sincronizamos
@@ -204,7 +205,6 @@ public class ActivityNFC extends AppCompatActivity {
     private void SubirDBFinal(String Resultado1, String Resultado2){
 
         Database.child(VariablesEstaticas.CurrentUserUID).child(Resultado1).setValue(Resultado2);
-
         Intent finish = new Intent(ActivityNFC.this, ActivityFinish.class);
         startActivity(finish);
        //Toast.makeText(ActivityNFC.this, "Algo falló al guardar tu entrada", Toast.LENGTH_SHORT).show();
